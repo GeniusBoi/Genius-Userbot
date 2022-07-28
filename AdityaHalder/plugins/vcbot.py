@@ -57,8 +57,8 @@ async def ytdl_(link):
     else:
         return 0, stderr.decode()
 
-@app.on_message(command([".ply", "ply"]) & SUDOERS)
-#@Client.on_message(command([".ply", "ply"]) & SUDOERS)
+
+@Client.on_message(command([".ply", "ply"]) & SUDOERS)
 async def play(c: Client, m: Message):
     await m.delete()
     replied = m.reply_to_message
