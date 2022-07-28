@@ -1,7 +1,7 @@
 import re
 import asyncio
 from AdityaHalder.modules.cache.admins import admins
-from AdityaHalder.modules.helpers.filters import command
+from AdityaHalder.modules.helpers.filters import command, other_filters
 from AdityaHalder.utilities.utils import bash, skip_current_song, skip_item
 from AdityaHalder.modules.clientbot.queues import QUEUE, add_to_queue, clear_queue
 from AdityaHalder.modules.clientbot import client as app, pytgcalls as aditya
@@ -19,7 +19,7 @@ from pytgcalls.types.input_stream.quality import (
 )
 from youtubesearchpython import VideosSearch
 from AdityaHalder.utilities.misc import SUDOERS
-
+from AdityaHalder.config import COMMAND_PREFIXES
 
 def ytsearch(query: str):
     try:
@@ -58,7 +58,10 @@ async def ytdl_(link):
         return 0, stderr.decode()
 
 
-@Client.on_message(command(["ply", "play"]) & SUDOERS)
+@app.on_message(
+    filters.command(["ply", "ytp"], AdityaHalder.config.COMMAND_PREFIXES) & ~filters.group & ~filters.edited
+)
+@sudo_users_only
 async def play(c: Client, m: Message):
     await m.delete()
     replied = m.reply_to_message
@@ -459,7 +462,6 @@ __HELP__ = f"""
 **Yᴏᴜ Cᴀɴ Pʟᴀʏ Mᴜsɪᴄ Oɴ VC**
 
 `.ply` - Pʟᴀʏ Mᴜsɪᴄ Oɴ Vᴄ
-`.ply` - Pʟᴀʏ Vɪᴅᴇᴏ Oɴ Vᴄ
 `.pse` - Pᴀᴜsᴇ Yᴏᴜʀ Mᴜsɪᴄ
 `.rsm` - Rᴇsᴜᴍᴇ Yᴏᴜʀ Mᴜsɪᴄ
 `.skp` - Sᴋɪᴘ Tᴏ Tʜᴇ Nᴇxᴛ Sᴏɴɢ
