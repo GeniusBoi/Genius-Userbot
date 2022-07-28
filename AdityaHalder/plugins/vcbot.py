@@ -61,7 +61,7 @@ async def ytdl_(link):
 
 @Client.on_message(command([".ply", "ply"]) & filters.group)
 @sudo_users_only
-async def play(c: Client, m: Message):
+async def ply(c: Client, m: Message):
     await m.delete()
     replied = m.reply_to_message
     chat_id = m.chat.id
